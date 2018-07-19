@@ -30,7 +30,6 @@ class BrowscapUserAgentParserTest extends FlatSpec
   }
 
   "parse" should " return None because user agent not matched" in {
-    val userAgent = "userAgent"
     val position = mock[Position]
     val pattern = Pattern.compile("^&$")
 
@@ -43,7 +42,6 @@ class BrowscapUserAgentParserTest extends FlatSpec
   }
 
   "parse" should " return user agent info" in {
-    val userAgent = "userAgent"
     val position = mock[Position]
     val pattern = Pattern.compile("^.*?$")
     val str = "\"CFNetwork/*\",\"false\",\"false\",\"CFNetwork Generic\",\"CFNetwork Generic\",\"CFNetwork\",\"Application\",\"32\",\"Apple Inc\",\"\",\"0.0\",\"0\",\"0\",\"Darwin\",\"\",\"Darwin is a Core Component of MacOSX and iOS\",\"32\",\"Apple Inc\",\"false\",\"false\",\"false\",\"false\",\"false\",\"true\",\"true\",\"true\",\"true\",\"false\",\"true\",\"false\",\"true\",\"false\",\"false\",\"false\",\"false\",\"false\",\"false\",\"false\",\"false\",\"0\",\"0\",\"Macintosh\",\"Apple Inc\",\"Desktop\",\"mouse\",\"Macintosh\",\"Apple\",\"WebKit\",\"\",\"For Google Chrome, iOS (including both mobile Safari, WebViews within third-party apps, and web clips), Safari, Arora, Midori, OmniWeb, Shiira, iCab since version 4, Web, SRWare Iron, Rekonq, and in Maxthon 3.\",\"Apple Inc\""
