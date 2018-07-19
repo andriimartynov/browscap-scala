@@ -1,5 +1,6 @@
 package net.github.andriimartynov.browscap
 
+import scala.collection.JavaConverters._
 import java.util.regex.Pattern
 
 import scala.util.Try
@@ -11,16 +12,17 @@ class BrowscapUserAgentParser(
   private val patterns = browscapDataStore
     .map
     .keys
-    .toSeq.
-    sortWith(_.pattern().length > _.pattern().length)
-    .par
+    .toSeq
+    .sortWith(_.pattern().length > _.pattern().length)
+    .asJava
+
 
   def parse(
              userAgent: String
            ): Option[UserAgentInfo] = {
     val patterns = findPatterns(userAgent.toLowerCase)
-    if (patterns.isEmpty) None
-    else build(patterns.head, userAgent)
+    if (patterns.isPresent) build(patterns.get, userAgent)
+    else None
   }
 
   private def build(
@@ -74,7 +76,10 @@ class BrowscapUserAgentParser(
   )
 
   private def findPatterns(userAgent: String) =
-    patterns.filter(
+    patterns
+      .stream
+      .parallel()
+      .filter(
       _.matcher(userAgent).matches()
-    ).take(1)
+    ).findFirst
 }
